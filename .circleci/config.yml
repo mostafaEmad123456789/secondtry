@@ -36,7 +36,7 @@ jobs:
             command: apk add --update ansible    
         - run:
             name: "Configuring Servers"
-            command: "ansible-playbook -i inventory.txt playbook.yml"
+            command: "ansible-playbook -i inventory.txt playbook.yml --private-key project3.pem"
 workflows:
   CICD-Workflow:
     jobs:

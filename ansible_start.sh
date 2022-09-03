@@ -2,5 +2,5 @@
 
 #sh /home/mostafa/ansible/get_instances_list.sh
 
-ansible-playbook playbook.yml -i inventory.txt --private-key project3.pem
+ansible-playbook main4.yml -i inventory.txt --private-key project3.pem
 

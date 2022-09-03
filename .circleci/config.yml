@@ -26,7 +26,7 @@ jobs:
         - image: python:3.7-alpine3.11
       steps:
         - checkout
-        - restore_cache:
+        - restore_cache: 
             keys:
               - inventory
         - add_ssh_keys:

@@ -1,0 +1,46 @@
+version: 2.1
+
+orbs:
+
+  aws-cli: circleci/aws-cli@2.0.3
+
+jobs:
+
+    Create-Infrastructure:
+      docker: 
+        - image: amazon/aws-cli
+      steps:
+        - checkout
+        - run: 
+            name: "Creating Cloudformation Stack"
+            command: "aws cloudformation deploy --stack-name Section4 --template-file cloudTemplate.yml --region us-east-1"
+        - run:
+            name: "Generating Inventory File"
+            command: sh get_instances_list.sh
+        - save_cache:
+            key: inventory
+            paths: .
+
+    Configure-Infrastructure:
+      docker: 
+        - image: python:3.7-alpine3.11
+      steps:
+        - checkout
+        - restore_cache:
+            keys:
+              - inventory
+        - add_ssh_keys:
+            fingerprints: ["39:72:01:15:d1:d6:bd:3d:74:a7:62:9f:c3:9b:ca:68"]
+        - run:
+            name: "Installing Ansible"
+            command: apk add --update ansible    
+        - run:
+            name: "Configuring Servers"
+            command: ansible-playbook playbook.yml -i inventory.txt    
+workflows:
+  CICD-Workflow:
+    jobs:
+      - Create-Infrastructure1
+      - Configure-Infrastructure:
+          requires: 
+            - Create-Infrastructure

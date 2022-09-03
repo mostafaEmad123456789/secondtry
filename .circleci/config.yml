@@ -33,10 +33,13 @@ jobs:
             fingerprints: ["39:72:01:15:d1:d6:bd:3d:74:a7:62:9f:c3:9b:ca:68"]
         - run:
             name: "Installing Ansible"
-            command: apk add --update ansible    
+            command: apk add --update ansible
+        - run:
+            name: "cat playbook"
+            command: "cat playbook.yml"
         - run:
             name: "Configuring Servers"
-            command: "ansible-playbook -i inventory.txt playbook.yml --private-key project3.pem"
+            command: "ansible-playbook -i inventory.txt playbook.yml"
 workflows:
   CICD-Workflow:
     jobs:

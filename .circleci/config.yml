@@ -40,7 +40,7 @@ jobs:
 workflows:
   CICD-Workflow:
     jobs:
-      - Create-Infrastructure1
+      - Create-Infrastructure
       - Configure-Infrastructure:
           requires: 
             - Create-Infrastructure
